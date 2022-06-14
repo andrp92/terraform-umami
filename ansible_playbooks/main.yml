@@ -14,3 +14,11 @@
 
 - name: Install and setup Certbot for SSL
   import_playbook: tasks/certbot.yml
+
+- name: Clean up secrets
+  hosts: localhost
+  tasks:
+    - name: Cleaning up secrets
+      file: path={{ item }} state=absent
+      with_items:
+        - defaults/tf_ansible_vars.yml
