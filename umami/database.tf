@@ -22,10 +22,11 @@ resource "google_sql_database" "database" {
 resource "google_sql_database_instance" "instance" {
   provider = google-beta
 
-  name             = "${var.db_instance_name}-${random_id.db_name_suffix.hex}"
-  region           = var.region
-  database_version = var.db_version
-  project          = var.project
+  name                = "${var.db_instance_name}-${random_id.db_name_suffix.hex}"
+  region              = var.region
+  database_version    = var.db_version
+  project             = var.project
+  deletion_protection = false
 
 
   depends_on = [google_service_networking_connection.private_vpc_connection, google_compute_instance.umami-instance]
