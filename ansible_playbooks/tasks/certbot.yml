@@ -1,0 +1,16 @@
+- hosts: all
+  become: true
+  
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install latest version of Certbot
+      apt: name={{ item }} state=latest
+      with_items:
+        - certbot
+        - python3-certbot-nginx
+
+    - name: Setup Certbot account and install certificates
+      shell: certbot --nginx --non-interactive --agree-tos --email {{ email }} --domains {{ host_domain }} --register-unsafely-without-email

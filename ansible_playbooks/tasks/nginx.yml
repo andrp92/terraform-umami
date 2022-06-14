@@ -1,0 +1,35 @@
+- hosts: all
+  become: true
+  
+  tasks:
+    
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install latest version of Nginx
+      apt:
+        name: nginx
+        state: latest
+
+    - name: Start nginx Service
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+    - name: Copy umami config file to remote host
+      template:
+        src: ../templates/umami.conf.tpl
+        dest: /etc/nginx/sites-available/umami.conf
+
+    - name: create symlink
+      file:
+        src: /etc/nginx/sites-available/umami.conf
+        dest: /etc/nginx/sites-enabled/umami.conf
+        state: link
+
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted

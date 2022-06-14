@@ -1,0 +1,14 @@
+--- 
+# Globals
+ansible_host_key_checking: false
+
+# Instance related
+host_domain: umami.andresrp.com
+
+# Umami related variables
+umami_dir: /home/debian/umami
+node_env: production
+node_port: 3000
+
+# Certbot related variables
+email: dummy@gmail.com

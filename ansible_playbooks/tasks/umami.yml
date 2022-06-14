@@ -1,0 +1,82 @@
+- hosts: all
+
+  tasks:
+    - name: Install reqired packages
+      apt: name={{ item }} state=latest
+      with_items:
+        - postgresql
+        - postgresql-contrib
+        - git
+        - curl
+        - wget
+        - nodejs
+        - npm
+      become: true
+
+    # Clone Umami repository
+    - name: Clone Umami github repository
+      git:
+        repo: https://github.com/mikecao/umami.git
+        dest: "{{ umami_dir }}"
+        clone: yes
+        update: yes
+
+    # Create .env with URI for connecting to Postgres
+    # and setting up Umami
+    - name: Create Umami env file
+      template:
+        src: ../templates/umami_env.tpl
+        dest: "{{ umami_dir }}/.env"
+
+    # Create file to create environment variables 
+    # for connecting to Postgres and initialize db
+    - name: Create Postgresql env file
+      template:
+        src: ../templates/postgresql.tpl
+        dest: "{{ umami_dir }}/.postgresql.env"
+
+    - name: Start postgresql Service
+      service:
+        name: postgresql
+        state: started
+        enabled: yes
+      become: true
+
+    # Initialize postgresql
+    - name: Initialize postgresql
+      shell: "export $(cat {{ umami_dir }}/.postgresql.env | xargs) && psql -f {{ umami_dir }}/sql/schema.postgresql.sql"
+      become: true
+
+    # Install yarn
+    - name: Install yarn
+      npm:
+        name: yarn
+        state: latest
+        global: yes
+      become: true
+
+    # Install and build Umami
+    - name: Install Umami
+      shell: cd {{ umami_dir }} && yarn install && yarn build
+      become: true
+
+    # Create Umami service
+    - name: Create Umami systemd service file
+      template:
+        src: ../templates/umami.service.tpl
+        dest: /lib/systemd/system/umami.service
+      become: true
+
+    # Start Unami service
+    - name: Start Umami service
+      service:
+        name: umami
+        state: started
+        enabled: yes
+      become: true
+
+    - name: Remove .env files that were created for setup
+      file: path={{ item }} state=absent
+      with_items:
+      - "{{ umami_dir }}/.env"
+      - "{{ umami_dir }}/.postgresql.env"

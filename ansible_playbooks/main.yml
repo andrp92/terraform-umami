@@ -1,0 +1,16 @@
+- name: main
+  hosts: all
+  tasks:
+  # NOTE: tf_* files are automatically generated upon Terraform run.
+    - include_vars:
+        dir: defaults
+        depth: 1   
+
+- name: Install and setup Nginx
+  import_playbook: tasks/nginx.yml
+
+- name: Install and setup Umami
+  import_playbook: tasks/umami.yml
+
+- name: Install and setup Certbot for SSL
+  import_playbook: tasks/certbot.yml
