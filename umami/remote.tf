@@ -7,8 +7,8 @@ resource "local_file" "tf_ansible_vars_file_new" {
     
     # Required variables for database connection and proper Umami setup
     db_host: ${google_sql_database_instance.instance.private_ip_address}
-    db_username: ${var.umami_db_user}
-    db_password: ${var.umami_db_password}
+    db_username: ${var.db_user}
+    db_password: ${var.db_password}
     db_name: ${var.db_name}
 
     # Instance user

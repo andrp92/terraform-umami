@@ -35,10 +35,10 @@ variable "gce_ssh_user" {
 }
 
 # Postgresql database variables
-variable "umami_db_user" {
+variable "db_user" {
   default = "umami"
 }
-variable "umami_db_password" {
+variable "db_password" {
   default = "umami"
 }
 variable "db_name" {
