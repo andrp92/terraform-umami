@@ -9,7 +9,7 @@ variable "zone" {
   default = "europe-west9-c"
 }
 variable "json_key_path" {
-  default = "../service-account.json"
+  default = "sa.tfvars.json"
 }
 
 # VM instance variables

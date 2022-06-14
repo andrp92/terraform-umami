@@ -155,6 +155,9 @@ fabric.properties
 # Local .terraform directories
 **/.terraform/*
 
+# .lock files
+*.terraform.lock.*
+
 # .tfstate files
 *.tfstate
 *.tfstate.*
