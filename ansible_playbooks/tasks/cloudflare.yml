@@ -1,0 +1,22 @@
+- hosts: all
+
+  tasks:
+    - name: Create DNS record
+      cloudflare_dns:
+        zone: "{{ dns_zone }}"
+        record: "{{ sub_domain }}"
+        type: A
+        solo: true
+        value: "{{ host_ip }}"
+        api_token: "{{ cloudflare_api_token }}"
+        state: present
+
+    - name: Create www DNS record
+      cloudflare_dns:
+        zone: "{{ dns_zone }}"
+        record: "www.{{ sub_domain }}"
+        type: A
+        solo: true
+        value: "{{ host_ip }}"
+        api_token: "{{ cloudflare_api_token }}"
+        state: present

@@ -1,5 +1,5 @@
 server {
-  server_name "{{ host_domain }}";
+  server_name {{ host_uri }} www.{{ host_uri }};
 
   location / {
     proxy_pass http://localhost:3000;

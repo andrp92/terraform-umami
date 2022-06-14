@@ -13,4 +13,4 @@
         - python3-certbot-nginx
 
     - name: Setup Certbot account and install certificates
-      shell: certbot --nginx --non-interactive --agree-tos --email {{ email }} --domains {{ host_domain }} --register-unsafely-without-email
+      shell: certbot --nginx --non-interactive --agree-tos --email {{ email }} --domains {{ host_uri }},www.{{ host_uri }} --register-unsafely-without-email
