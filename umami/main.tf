@@ -14,6 +14,13 @@ provider "google" {
   zone        = var.zone
 }
 
+provider "google-beta" {
+  credentials = file("${var.json_key_path}")
+  project     = var.project
+  region      = var.region
+  zone        = var.zone
+}
+
 # Enable api services required for terraform provisioning
 resource "google_project_service" "api-services" {
   for_each = toset([
