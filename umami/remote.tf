@@ -1,5 +1,5 @@
 # Export Terraform variable values to a var_file before calling Ansible
-resource "local_file" "tf_ansible_vars_file_new" {
+resource "local_sensitive_file" "tf_ansible_vars_file_new" {
   depends_on = [google_compute_instance.umami-instance, google_sql_database_instance.instance]
   content    = <<-DOC
     # Ansible vars_file containing variable values from Terraform.
