@@ -9,7 +9,6 @@ variable "zone" {
   default = "europe-west9-c"
 }
 variable "json_key_path" {
-  default = "sa.tfvars.json"
 }
 
 # VM instance variables
@@ -36,10 +35,8 @@ variable "gce_ssh_user" {
 
 # Postgresql database variables
 variable "db_user" {
-  default = "umami"
 }
 variable "db_password" {
-  default = "umami"
 }
 variable "db_name" {
   default = "umami-db"
