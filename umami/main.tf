@@ -53,5 +53,5 @@ resource "google_compute_instance" "umami-instance" {
     access_config {}    # Enables external ip address
   }
   tags       = ["umami", "web"]
-  depends_on = [google_project_service.api-services]
+  depends_on = [google_project_service.api-services, google_sql_database_instance.instance]
 }

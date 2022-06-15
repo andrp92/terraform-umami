@@ -29,7 +29,7 @@ resource "google_sql_database_instance" "instance" {
   deletion_protection = false
 
 
-  depends_on = [google_service_networking_connection.private_vpc_connection, google_compute_instance.umami-instance]
+  depends_on = [google_service_networking_connection.private_vpc_connection]
 
   settings {
     tier = var.db_tier
